@@ -18,8 +18,8 @@ def send_mailing():
 
     # Обновляем статус рассылок на 'STOPPED', если время окончания прошло
     mailings_to_stop = Mailing.objects.filter(
+        ~Q(status=Mailing.STOPPED),
         end_datetime__lt=current_datetime,
-        status__ne=Mailing.STOPPED
     )
     for mailing in mailings_to_stop:
         mailing.status = Mailing.STOPPED
